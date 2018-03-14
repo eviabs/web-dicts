@@ -27,31 +27,56 @@ app.use('/', index);
 
 // Only this command is valid
 app.use('/dic/:id', function (req, res, next) {
+
     var dics = require('./dics.js');
+    var search_in_dic = undefined;
+
+    // first, check if the dictionary available
     switch (req.params.id.toLowerCase()) {
         case "urban":
-            dics.urban_dictionary(req.query, res);
+            search_in_dic = dics.urban_dictionary;
             break;
 
         case "morfix":
-            dics.morfix(req.query, res);
+            search_in_dic = dics.morfix;
+            break;
+
+        case "wikipedia":
+            search_in_dic = dics.wikipedia;
+
             break;
 
 
         case "images":
-            dics.images(req.query, res);
+            search_in_dic = dics.images;
             break;
+
         default:
             res.status(400);
-            res.end(JSON.stringify({"error": "bad request"}, null, 4));
+            res.end(JSON.stringify(dics.get_error_json(dics.ERROR_CODE_NO_SUCH_DIC), null, 4));
+            return;
     }
+
+    // then, make sure that query is fine (at this moment, all queries look the same!)
+    if (!dics.validtae_query(req.query, [dics.QUERY_PARAM_TERM])) {
+        res.status(400);
+        res.end(JSON.stringify(dics.get_error_json(dics.ERROR_CODE_BAD_QUERY), null, 4));
+        return;
+    }
+
+    // only then run the middleware
+    search_in_dic(req.query, res);
+
 });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  // var err = new Error('Not Found');
+  // err.status = 404;
+  // next(err);
+
+    res.status(404);
+    res.end("not found");
 });
 
 // error handler
