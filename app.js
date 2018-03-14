@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 
 var app = express();
 
@@ -58,7 +58,7 @@ app.use('/dic/:id', function (req, res, next) {
     }
 
     // then, make sure that query is fine (at this moment, all queries look the same!)
-    if (!dics.validtae_query(req.query, [dics.QUERY_PARAM_TERM])) {
+    if (!dics.validate_query(req.query, [dics.QUERY_PARAM_TERM])) {
         res.status(400);
         res.end(JSON.stringify(dics.get_error_json(dics.ERROR_CODE_BAD_QUERY), null, 4));
         return;
