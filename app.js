@@ -58,7 +58,7 @@ app.use('/dic/:id', function (req, res, next) {
     }
 
     // then, make sure that query is fine (at this moment, all queries look the same!)
-    if (!dics.validate_query(req.query, [dics.QUERY_PARAM_TERM])) {
+    if (!dics.validate_query(req.query, [dics.QUERY_PARAM_TERM, dics.QUERY_PARAM_COUNT])) {
         res.status(400);
         res.end(JSON.stringify(dics.get_error_json(dics.ERROR_CODE_BAD_QUERY), null, 4));
         return;

@@ -4,6 +4,7 @@
 
 // Consts
 const QUERY_PARAM_TERM = "t"; // query "term" param
+const QUERY_PARAM_COUNT = "count"; // query "count" param
 const ERROR_CODE_NO_ERROR = 0; // query executed successfully
 const ERROR_CODE_SERVER_ERROR = 1; //remote server error
 const ERROR_CODE_NO_RESULTS = 2; // no results
@@ -23,6 +24,9 @@ var cheerio = require('cheerio'); // https://github.com/cheeriojs/cheerio
 module.exports = {
     /** query "term" param */
     QUERY_PARAM_TERM: QUERY_PARAM_TERM,
+
+    /** query "count" param */
+    QUERY_PARAM_COUNT: QUERY_PARAM_COUNT,
 
     /** query executed successfully */
     ERROR_CODE_NO_ERROR: ERROR_CODE_NO_ERROR, //
@@ -93,7 +97,11 @@ module.exports = {
      * @param res
      */
     images: function (query, res) {
-        var qwant_images_url = "https://api.qwant.com/api/search/images?count=10&offset=1&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+        var count = query[QUERY_PARAM_COUNT];
+        count = isNaN(count) ? 10 : count;
+        count = count < 1 ? 10 : count;
+
+        var qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, qwant_images_url, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
