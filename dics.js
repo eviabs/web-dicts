@@ -548,8 +548,9 @@ function qwant_images_process_result(search_result) {
                     "thumbnail"].forEach(function (attribute) {
                     new_img[attribute] = img[attribute];
                 });
-
+                new_img["thumbnail"] = "https:" + img["thumbnail"]; // https should be added manually
                 new_result.images.push(new_img);
+
             });
             break;
 
