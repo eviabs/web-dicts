@@ -560,6 +560,10 @@ function qwant_images_process_result(search_result) {
                 new_result.images.push(new_img);
 
             });
+
+            if (new_result.images.length === 0) {
+                new_result.error = ERROR_CODE_NO_RESULTS;
+            }
             break;
 
         default:
