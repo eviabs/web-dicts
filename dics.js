@@ -548,6 +548,12 @@ function qwant_images_process_result(search_result) {
     switch (search_result[status]) {
         // if no results are available, but there are suggestions, push them one by one to the array.
         case "success":
+            // check if there was an API_ERROR
+            if (search_result.data.error !== undefined) {
+                new_result.error = ERROR_CODE_SERVER_ERROR;
+                break;
+            }
+
             // iterate over the Words and copy only the needed attributes and omit the rest
             search_result.data.result.items.forEach(function (img) {
                 // Words attributes:
@@ -565,6 +571,9 @@ function qwant_images_process_result(search_result) {
                 new_result.error = ERROR_CODE_NO_RESULTS;
             }
             break;
+
+
+
 
         default:
             new_result.error = ERROR_CODE_NO_RESULTS;
