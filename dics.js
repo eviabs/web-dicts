@@ -436,6 +436,7 @@ function morfix_process_result(search_result) {
         case "Suggestions":
             search_result[CorrectionList].forEach(function (suggestion) {
                 new_result[CorrectionList].push(suggestion["Word"]);
+                new_result.error = ERROR_CODE_NO_RESULTS
             });
             break;
 
