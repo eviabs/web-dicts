@@ -91,6 +91,7 @@ module.exports = {
     /**
      * Qwant images
      * API https://api.qwant.com/api/search/images?count=10&offset=1&q={term}
+     * API https://api.qwant.com/api/search/images?count=10&offset=1&q=hello
      * Uses the unofficial api.
      *
      * @param query
