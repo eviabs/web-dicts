@@ -10,6 +10,7 @@ The processed data can be displayed using [this android app](https://github.com/
 A running instance is available [here](https://web-dicts.herokuapp.com/). As for this moment, the following requests are supported:
 
 * Morfix: https://web-dicts.herokuapp.com/dic/morfix?t=walrus
+* Milog: https://web-dicts.herokuapp.com/dic/milog?t=שלום
 * Urban Dictionary: https://web-dicts.herokuapp.com/dic/urban?t=walrus
 * Wikipedia: https://web-dicts.herokuapp.com/dic/wikipedia?t=walrus
 * QWANT Images: https://web-dicts.herokuapp.com/dic/images?t=walrus&count=5
