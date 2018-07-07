@@ -219,6 +219,8 @@ function server_request(res, method, url, headers, body, success_callback, error
 
                 // if error, call the default error function or the given error_callback
             } else {
+                // print error to console - for debugging
+                console.log(error);
                 error_callback !== undefined ? error_callback(res, body) : default_error(res, body);
             }
         });
