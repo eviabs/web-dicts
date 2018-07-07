@@ -8,11 +8,17 @@ var app = require('../app');
 var debug = require('debug')('web-dicts:server');
 var http = require('http');
 
+
+/**
+ * Get port
+ */
+var port_from_argv = parseInt(process.argv.splice(process.execArgv.length + 2));
+var port_to_use = (isNaN(port_from_argv) ? 80 : port_from_argv);
+
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || port_to_use);
 app.set('port', port);
 
 /**
