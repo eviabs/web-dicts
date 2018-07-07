@@ -37,6 +37,10 @@ app.use('/dic/:id', function (req, res, next) {
             search_in_dic = dics.urban_dictionary;
             break;
 
+        case "milog":
+            search_in_dic = dics.milog;
+            break;
+
         case "morfix":
             search_in_dic = dics.morfix;
             break;

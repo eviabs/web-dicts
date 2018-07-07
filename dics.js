@@ -18,8 +18,9 @@ const GET_REQUEST = "GET";
 
 // Includes
 var request = require("request");
-// var iconv = require('iconv-lite');
+//var iconv = require('iconv-lite');
 var cheerio = require('cheerio'); // https://github.com/cheeriojs/cheerio
+var utf8 = require('utf8');
 
 module.exports = {
     /** query "term" param */
@@ -88,6 +89,22 @@ module.exports = {
 
     },
 
+    /**
+     * Milog
+     * Scarapes https://milog.co.il/{query}
+     *
+     * @param query
+     * @param res response object
+     */
+    milog: function (query, res) {
+        var milog_url = "https://milog.co.il/" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+
+        get_request(res, milog_url, function (res, body) {
+            res.header("Content-Type", "application/json; charset=utf-8");
+            res.end(JSON.stringify(milog_process_result(body), null, 4));
+        });
+
+    },
     /**
      * Qwant images
      * API https://api.qwant.com/api/search/images?count=10&offset=1&q={term}
@@ -271,14 +288,14 @@ module.exports = {
      * @returns {boolean}
      */
     validate_query: function (query, allowed_params) {
-    var res = true;
-    Object.keys(query).forEach(function (param) {
-        if (!allowed_params.includes(param)){
-            res = false;
-        }
-    });
-    return res;
-}
+        var res = true;
+        Object.keys(query).forEach(function (param) {
+            if (!allowed_params.includes(param)){
+                res = false;
+            }
+        });
+        return res;
+    }
 };
 
 // ===================================================================================================
@@ -338,7 +355,7 @@ function server_request(res, method, url, headers, body, success_callback, error
             if (!error && response.statusCode === 200) {
                 success_callback !== undefined ? success_callback(res, body) : default_success(res, body);
 
-            // if error, call the default error function or the given error_callback
+                // if error, call the default error function or the given error_callback
             } else {
                 error_callback !== undefined ? error_callback(res, body) : default_error(res, body);
             }
@@ -472,6 +489,73 @@ function morfix_process_result(search_result) {
         default:
             new_result.error = ERROR_CODE_NO_RESULTS
     }
+
+    return new_result
+}
+
+/***
+ * Scrapes Milog site
+ *
+ * @param search_result search results in html format
+ * @returns {*}
+ */
+function milog_process_result(search_result) {
+    // the new (and empty) results object
+    var new_result = {
+        error: ERROR_CODE_NO_ERROR,
+        words: []
+    };
+
+    var meanings_results = [];
+
+    // set the $ object
+    var $ = cheerio.load(search_result, { decodeEntities: false });
+
+    // iterate over the words
+    $("[class=sr_e]").each(function (i, elem) {
+        var current = {
+            title: "none",
+            definitions: []
+        };
+
+        // title
+        current["title"] = $(this).find('a').html();
+
+        // discard "did you mean" word
+        if (current["title"].includes("- האם התכוונת ל:")) {
+            return;
+        }
+        // definitions
+        $(this).find('.sr_e_txt').each(function (i, elem) {
+
+            try {
+                // remove links for wikipedia
+                if ($(this).find('span').find('a').attr('onmousedown').includes("_gaq.push")) {
+                    current["definitions"].push($(this).text())
+                }
+            } catch (e) {
+                // remove any other links
+                if ($(this).find('a').length > 0) {
+                    current["definitions"].push($(this).text())
+                } else {
+                    current["definitions"].push($(this).html())
+                }
+            }
+
+        });
+
+        // add current word (only if it has definitions)
+        if (current.definitions.length > 0) {
+            meanings_results.push(current);
+        }
+    });
+
+    // if no results, set the current error
+    if (meanings_results.length === 0) {
+        new_result.error = ERROR_CODE_NO_RESULTS;
+    }
+
+    new_result.words = meanings_results;
 
     return new_result
 }
