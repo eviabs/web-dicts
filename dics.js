@@ -17,10 +17,8 @@ const POST_REQUEST = "POST";
 const GET_REQUEST = "GET";
 
 // Includes
-var request = require("request");
-//var iconv = require('iconv-lite');
-var cheerio = require('cheerio'); // https://github.com/cheeriojs/cheerio
-var utf8 = require('utf8');
+let request = require("request");
+let cheerio = require('cheerio'); // https://github.com/cheeriojs/cheerio
 
 module.exports = {
     /** query "term" param */
@@ -62,7 +60,7 @@ module.exports = {
      * @param res response object
      */
     urban_dictionary: function (query, res) {
-        var urban_dictionary_url = "http://api.urbandictionary.com/v0/define?term=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+        let urban_dictionary_url = "http://api.urbandictionary.com/v0/define?term=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, urban_dictionary_url, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
@@ -78,9 +76,9 @@ module.exports = {
      * @param res response object
      */
     morfix: function (query, res) {
-        var morfix_url = "http://services.morfix.com/TranslationHebrew/TranslationService.svc/GetTranslation/";
-        var morfix_headers = {"Accept": "application/json", "Host": "services.morfix.com", "Content-Type": "application/json"};
-        var morfix_body = {"Query": encodeURIComponent(query[QUERY_PARAM_TERM]),"ClientName":"Android_Hebrew"};
+        let morfix_url = "http://services.morfix.com/TranslationHebrew/TranslationService.svc/GetTranslation/";
+        let morfix_headers = {"Accept": "application/json", "Host": "services.morfix.com", "Content-Type": "application/json"};
+        let morfix_body = {"Query": encodeURIComponent(query[QUERY_PARAM_TERM]),"ClientName":"Android_Hebrew"};
 
         post_request(res, morfix_url, morfix_headers, morfix_body, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
@@ -97,7 +95,7 @@ module.exports = {
      * @param res response object
      */
     milog: function (query, res) {
-        var milog_url = "https://milog.co.il/" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+        let milog_url = "https://milog.co.il/" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, milog_url, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
@@ -115,11 +113,11 @@ module.exports = {
      * @param res
      */
     images: function (query, res) {
-        var count = query[QUERY_PARAM_COUNT];
+        let count = query[QUERY_PARAM_COUNT];
         count = isNaN(count) ? 10 : count;
         count = count < 1 ? 10 : count;
 
-        var qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+        let qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, qwant_images_url, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
@@ -136,149 +134,13 @@ module.exports = {
      * @param res
      */
     wikipedia: function (query, res) {
-        var wikipedia_url = "https://" + lang(query[QUERY_PARAM_TERM]) + ".wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&redirects=1&titles=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+        let wikipedia_url = "https://" + lang(query[QUERY_PARAM_TERM]) + ".wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&redirects=1&titles=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, wikipedia_url, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
             res.end(JSON.stringify(wikipedia_process_result(body), null, 4));
         });
     },
-
-    /**
-     * Google images
-     *
-     * Sraped Google images site.
-     * Better no be used without switching ip mechanism!
-     * Will result a ban after too many requests.
-     *
-     * @param query
-     * @param res response object
-     */
-    // images_google: function (query, res) {
-    //     request({
-    //             url: "https://www.google.com.ua/search?source=lnms&sa=X&gbv=1&tbm=isch&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]),
-    //             json: true,
-    //             encoding: null
-    //         },
-    //         function (error, response, body) {
-    //             if (!error && response.statusCode === 200) {
-    //                 // process html source code
-    //                 var results = [];
-    //
-    //                 // set the $ object
-    //                 var $ = cheerio.load(body);
-    //                 $('img').toArray().forEach(function (im) {
-    //                     if (im.attribs.onclick === undefined)
-    //                         results.push(im.attribs.src);
-    //                 });
-    //
-    //                 res.header("Content-Type", "application/json; charset=utf-8");
-    //                 res.end(JSON.stringify(results, null, 4));
-    //             } else {
-    //                 res.end(JSON.stringify(get_error_json(), null, 4));
-    //             }
-    //         });
-    // },
-
-    /**
-     * Morfix using scraping (use the api version if possible!)
-     *
-     * Reads the html source code, and extracts the definitions.
-     * Returns a
-     * @param query
-     * @param res response object
-     */
-    // morfix_scraping: function (query, res) {
-    //     const TRANSLATE_BOX = "translate_box";
-    //     const WORD = "word";
-    //     const DIBER = "diber";
-    //     const INFLECTION_PH = "inflection_ph";
-    //     const SOUND = "goody";
-    //     const HE_TRANS = "heTrans";
-    //     const SAMPLE_SENTENCES_CONTENT = "sampleSentencesContent";
-    //     const DEFAULT_TRANS = "default_trans";
-    //     const IS_HEBREW = "is_hebrew";
-    //
-    //     request({
-    //             url: "http://www.morfix.co.il/" + encodeURIComponent(query[QUERY_PARAM_TERM]),
-    //             json: true,
-    //             encoding: null
-    //         },
-    //         function (error, response, body) {
-    //
-    //             if (!error && response.statusCode === 200) {
-    //                 // process html source code
-    //                 var results = {};
-    //
-    //                 // set the $ object
-    //                 var $ = cheerio.load(body);
-    //
-    //                 // iterate over the translations ("translate_boxes")
-    //                 $("[class*=" + TRANSLATE_BOX + "]").each(function (i, elem) {
-    //                     var current = {};
-    //
-    //                     // Hebrew word
-    //                     current[WORD] = $(this).find("." + WORD).text();
-    //
-    //                     // Diber
-    //                     current[DIBER] = $(this).find("." + DIBER).text();
-    //
-    //                     // English word
-    //                     current[DEFAULT_TRANS] = $(this).find("." + DEFAULT_TRANS).text().split(/;|,/g).map(Function.prototype.call, String.prototype.trim);
-    //
-    //                     // Optional sound
-    //                     try {
-    //                         if (current[DEFAULT_TRANS] == EMPTY) {
-    //                             current[SOUND] = $(this).find("." + SOUND).html().split('(&apos;').pop().split('&apos;)').shift();
-    //                         }
-    //                         else {
-    //                             current[SOUND] = EMPTY;
-    //                         }
-    //                     }
-    //                     catch (e) {
-    //                         current[SOUND] = EMPTY;
-    //                     }
-    //
-    //                     // optional inflections
-    //                     try {
-    //                         current[INFLECTION_PH] = $(this).find("." + INFLECTION_PH).text().replace(/\r|\n|\t/g, "").split("|").map(Function.prototype.call, String.prototype.trim);
-    //                         if (current[INFLECTION_PH].length == 1 && current[INFLECTION_PH][0] == "") {
-    //                             current[INFLECTION_PH] = EMPTY;
-    //                         }
-    //                     }
-    //                     catch (e) {
-    //                         current[INFLECTION_PH] = EMPTY;
-    //                     }
-    //
-    //                     // optional sentences examples
-    //                     try {
-    //                         current[SAMPLE_SENTENCES_CONTENT] = $(this).find("." + SAMPLE_SENTENCES_CONTENT).text().replace(/\r|\n|\t/g, "").split("•").map(Function.prototype.call, String.prototype.trim);
-    //                         if (current[SAMPLE_SENTENCES_CONTENT].length == 1 && current[SAMPLE_SENTENCES_CONTENT][0] == "") {
-    //                             current[SAMPLE_SENTENCES_CONTENT] = EMPTY;
-    //                         }
-    //                     }
-    //                     catch (e) {
-    //                         current[SAMPLE_SENTENCES_CONTENT] = EMPTY;
-    //                     }
-    //
-    //                     // Hebrew translation
-    //                     current[HE_TRANS] = $(this).find("." + HE_TRANS).text();
-    //
-    //                     results[i] = current;
-    //                 });
-    //
-    //                 // Add language in results is not empty
-    //                 if (results !== {}) {
-    //                     results[IS_HEBREW] = contains_hebrew_chars(query[QUERY_PARAM_TERM]);
-    //                 }
-    //
-    //                 res.header("Content-Type", "application/json; charset=utf-8");
-    //                 res.end(JSON.stringify(results, null, 4));
-    //             } else {
-    //                 res.end(JSON.stringify(get_error_json(ERROR_CODE_SERVER_ERROR), null, 4));
-    //             }
-    //         });
-    // },
 
     /**
      * Checks that the query contains all only allowed params
@@ -288,7 +150,7 @@ module.exports = {
      * @returns {boolean}
      */
     validate_query: function (query, allowed_params) {
-        var res = true;
+        let res = true;
         Object.keys(query).forEach(function (param) {
             if (!allowed_params.includes(param)){
                 res = false;
@@ -308,7 +170,7 @@ module.exports = {
  * @param str
  * @returns {boolean}
  */
-var contains_hebrew_chars = function (str) {
+let contains_hebrew_chars = function (str) {
     // http://www.utf8-chartable.de/unicode-utf8-table.pl?start=1280
     return  /[\u05D0-\u05EA]/.test(str);
 };
@@ -321,7 +183,7 @@ var contains_hebrew_chars = function (str) {
  * @param str
  * @returns {string} the language
  */
-var lang = function (str) {
+let lang = function (str) {
     // http://www.utf8-chartable.de/unicode-utf8-table.pl?start=1280
     return contains_hebrew_chars(str) ? "he" : "en";
 };
@@ -405,7 +267,7 @@ function post_request(res, url, headers, body, success_callback, error_callback)
  * @param error_callback The error callback. Default error callback will be called if set to undefined.
  */
 function get_request(res, url, success_callback, error_callback) {
-    var headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"};
+    let headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"};
     server_request(res, GET_REQUEST, url, headers, undefined, success_callback, error_callback);
 }
 
@@ -440,7 +302,7 @@ function morfix_process_result(search_result) {
     const Query = "Query";
 
     // the new (and empty) results object
-    var new_result = {
+    let new_result = {
         error: ERROR_CODE_NO_ERROR,
         ResultType: search_result[ResultType],
         Query: search_result[Query],
@@ -464,7 +326,7 @@ function morfix_process_result(search_result) {
             search_result[Words].forEach(function (word) {
 
                 // Words attributes:
-                var new_word = {};
+                let new_word = {};
                 ["InputLanguageMeanings",
                     "OutputLanguageMeanings",
                     "PartOfSpeech",
@@ -501,19 +363,19 @@ function morfix_process_result(search_result) {
  */
 function milog_process_result(search_result) {
     // the new (and empty) results object
-    var new_result = {
+    let new_result = {
         error: ERROR_CODE_NO_ERROR,
         words: []
     };
 
-    var meanings_results = [];
+    let meanings_results = [];
 
     // set the $ object
-    var $ = cheerio.load(search_result, { decodeEntities: false });
+    let $ = cheerio.load(search_result, { decodeEntities: false });
 
     // iterate over the words
     $("[class=sr_e]").each(function (i, elem) {
-        var current = {
+        let current = {
             title: "none",
             definitions: []
         };
@@ -575,7 +437,7 @@ function urban_dictionary_process_result(search_result) {
     const sounds = "sounds";
 
     // the new (and empty) results object
-    var new_result = {
+    let new_result = {
         error: ERROR_CODE_NO_ERROR,
         result_type: search_result[result_type],
         list: [],
@@ -589,7 +451,7 @@ function urban_dictionary_process_result(search_result) {
             search_result[list].forEach(function (word) {
 
                 // Words attributes:
-                var new_word = {};
+                let new_word = {};
                 ["definition",
                     "word",
                     "thumbs_up",
@@ -627,7 +489,7 @@ function qwant_images_process_result(search_result) {
 
 
     // the new (and empty) results object
-    var new_result = {
+    let new_result = {
         error: ERROR_CODE_NO_ERROR,
         images: []
     };
@@ -644,7 +506,7 @@ function qwant_images_process_result(search_result) {
             // iterate over the Words and copy only the needed attributes and omit the rest
             search_result.data.result.items.forEach(function (img) {
                 // Words attributes:
-                var new_img = {};
+                let new_img = {};
                 ["media",
                     "thumbnail"].forEach(function (attribute) {
                     new_img[attribute] = img[attribute];
@@ -680,14 +542,14 @@ function qwant_images_process_result(search_result) {
 function wikipedia_process_result(search_result) {
 
     // the new (and empty) results object
-    var new_result = {
+    let new_result = {
         error: ERROR_CODE_NO_ERROR,
         title: "",
         extract: ""
     };
 
 
-    var first_result = (search_result.query === undefined) ? undefined : search_result.query.pages[Object.keys(search_result.query.pages)[0]];
+    let first_result = (search_result.query === undefined) ? undefined : search_result.query.pages[Object.keys(search_result.query.pages)[0]];
 
     // if missing attribute is present, then no results found
     if (first_result !== undefined && first_result.missing === undefined) {
