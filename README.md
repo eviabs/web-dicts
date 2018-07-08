@@ -33,7 +33,7 @@ If you wish to add a search provider, there are several steps that must be done:
    `error_num` is a number that holds the state of the request. You can use this as you wish, but also must support the following errors:
    ``` javascipt
    0 // query executed successfully
-   1 // emote server error
+   1 // remote server error
    2 // no results found
    3 // no such search provider
    4 // bad query
