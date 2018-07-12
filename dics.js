@@ -95,6 +95,15 @@ module.exports = {
      * @param res response object
      */
     milog: function (query, res) {
+
+        // If no heb chars are present in query, don't search milog and return no results.
+        // (Milog has a bug in which english chars break the search...)
+        if (!contains_hebrew_chars(encodeURIComponent(query[QUERY_PARAM_TERM]))) {
+            res.header("Content-Type", "application/json; charset=utf-8");
+            res.end(JSON.stringify(get_error_json(ERROR_CODE_NO_RESULTS), null, 4));
+            return;
+        }
+
         let milog_url = "https://milog.co.il/" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, milog_url, function (res, body) {
