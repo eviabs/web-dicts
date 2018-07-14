@@ -1,14 +1,15 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+let express = require('express');
+let path = require('path');
+let favicon = require('serve-favicon');
+let morgan = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let colors = require('./mycolors')
 
-var index = require('./routes/index');
+let index = require('./routes/index');
 // var users = require('./routes/users');
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -16,7 +17,24 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+// morgan ref: https://github.com/expressjs/morgan
+// app.use(morgan('dev'));
+
+app.use(morgan(function (tokens, req, res) {
+    return [
+        colors.FgYellow + "(",
+        tokens['remote-addr'](req, res),
+        ")",
+        colors.Reset + (new Date).toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+        colors.FgCyan + tokens.method(req, res),
+        colors.FgBlue + decodeURIComponent(tokens.url(req, res)),
+        ((tokens.status(req, res) !== 200) ? colors.FgGreen : colors.FgRed) + "status=" + tokens.status(req, res),
+        colors.FgMagenta + tokens['response-time'](req, res), 'ms',
+        tokens['user-agent'](req, res) + colors.Reset
+    ].join(' ')
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -28,8 +46,8 @@ app.use('/', index);
 // Only this command is valid
 app.use('/dic/:id', function (req, res, next) {
 
-    var dics = require('./dics.js');
-    var search_in_dic = undefined;
+    let dics = require('./dics.js');
+    let search_in_dic = undefined;
 
     // first, check if the dictionary available
     switch (req.params.id.toLowerCase()) {

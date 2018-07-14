@@ -126,6 +126,7 @@ module.exports = {
         count = isNaN(count) ? 10 : count;
         count = count < 1 ? 10 : count;
 
+        // The url
         let qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, qwant_images_url, function (res, body) {
@@ -219,7 +220,11 @@ function server_request(res, method, url, headers, body, success_callback, error
             method: method,
             url: url,
             json: true,
-            body: body
+            body: body,
+            agentOptions: {
+                keepAlive: true,
+                keepAliveMsecs: 15000
+            }
         },
         function (error, response, body) {
             // if success, call the default success function or the given success_callback
