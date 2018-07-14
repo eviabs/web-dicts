@@ -5,6 +5,11 @@ The app wraps the official/unofficial APIs of a few search providers, and create
 
 The processed data can be displayed using [this android app](https://github.com/eviabs/Dicts).
 
+## Run
+```bash
+node bin/www [port]
+```
+Port is optional (if none given, default is 80).
 
 ## The API
 ### A running instance is available [here](https://web-dicts.herokuapp.com/). 
