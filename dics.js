@@ -127,7 +127,7 @@ module.exports = {
         count = count < 1 ? 10 : count;
 
         // The url
-        let qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&t=images&uiv=4&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+        let qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&t=images&uiv=4&locale=en_US&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, qwant_images_url, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
