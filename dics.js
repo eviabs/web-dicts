@@ -127,7 +127,7 @@ module.exports = {
         count = count < 1 ? 10 : count;
 
         // The url
-        let qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
+        let qwant_images_url = "https://api.qwant.com/api/search/images?count=" + count +"&offset=1&t=images&uiv=4&q=" + encodeURIComponent(query[QUERY_PARAM_TERM]);
 
         get_request(res, qwant_images_url, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
@@ -153,13 +153,19 @@ module.exports = {
     },
 
     /**
-     * Checks that the query contains all only allowed params
+     * Checks that the query contains only allowed params
      *
      * @param query
      * @param allowed_params
      * @returns {boolean}
      */
     validate_query: function (query, allowed_params) {
+
+        // if query is empty, it should not pass validation
+        if (!Object.keys(query).length) {
+            return false;
+        }
+
         let res = true;
         Object.keys(query).forEach(function (param) {
             if (!allowed_params.includes(param)){
