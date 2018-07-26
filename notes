@@ -1,0 +1,31 @@
+=======================
+= Notes worth keeping =
+=======================
+
+Morfix unofficial API:
+
+http://services.morfix.com/translationenglish/TranslationService/GetTranslation/
+http://services.morfix.com/TranslationHebrew/TranslationService.svc/GetTranslation/
+
+POST /translationhebrew/TranslationService/GetTranslation/ HTTP/1.1
+Accept: application/json
+Content-type: application/json
+Content-Length: 46
+Host: services.morfix.com
+Connection: Keep-Alive
+{"Query":"של","ClientName":"Android_Hebrew"}
+
+
+{"ResultType":"Match","Status":"Valid","AlternateList":[],"Query":"של","ReviseList":[],"CorrectionList":[],"CorrectionListL2":[],"TranslationType":"ToEnglish","TranslationTypeValue":2,"OneSuggestionOperatedFor":"","OneAlternateOperatedFor":null,"Words":[{"ID":"12113","InputLanguageMeanings":[[{"DisplayText":"שֶׁל","Translation":"","SoundURL":""}]],"OutputLanguageMeanings":[[{"DisplayText":"of","Translation":" שֶׁל; מִן, מִ","SoundURL":""},{"DisplayText":"belonging to","Translation":"","SoundURL":""}],[{"DisplayText":"made of","Translation":"","SoundURL":""}],[{"DisplayText":"by","Translation":" לְיַד, לְצַד; דֶּרֶךְ, בְּאֶמְצָעוּת, עַל-יְדֵי; לֹא יְאֻחַר מ___, לְכָל הַמְּאֻחָר, עַד; מֵאֵת","SoundURL":""}],[{"DisplayText":"for","Translation":" עֲבוּר, לְמַעַן, בִּשְׁבִיל, בְּעַד, לְ; לְמֶשֶךְ","SoundURL":""}],[{"DisplayText":"שלי - mine","Translation":"","SoundURL":""},{"DisplayText":"my","Translation":"","SoundURL":""}],[{"DisplayText":"שלך","Translation":"","SoundURL":""},{"DisplayText":"שלכם","Translation":"","SoundURL":""},{"DisplayText":"שלכן - yours","Translation":"","SoundURL":""},{"DisplayText":"your","Translation":"","SoundURL":""}],[{"DisplayText":"שלו - his","Translation":"","SoundURL":""},{"DisplayText":"its","Translation":"","SoundURL":""}],[{"DisplayText":"שלה - hers","Translation":"","SoundURL":""},{"DisplayText":"her","Translation":"","SoundURL":""},{"DisplayText":"its","Translation":"","SoundURL":""}],[{"DisplayText":"שלנו - ours","Translation":"","SoundURL":""},{"DisplayText":"our","Translation":"","SoundURL":""}],[{"DisplayText":"שלהם","Translation":"","SoundURL":""},{"DisplayText":"שלהן - theirs","Translation":"","SoundURL":""},{"DisplayText":"their","Translation":"","SoundURL":""}]],"PartOfSpeech":"","OutputLanguageMeaningsString":"of, belonging to  ; made of  ; by  ; for  ; שלי - mine, my  ; שלך, שלכם, שלכן - yours, your  ; שלו - his, its  ; שלה - hers, her, its  ; שלנו - ours, our  ; שלהם, שלהן - theirs, their","isExactMatch":"","WOTDimageURL":"","WOTDtooltip":"","TranslationIdenticalToSource":null,"Inflections":[],"SampleSentences":[],"SynonymsList":[],"UsageNotes":"","AdditionalContentList":[],"SynonymsBlocks":null,"SynonymsLinks":[]},{"ID":"33435","InputLanguageMeanings":[[{"DisplayText":"שָׁל","Translation":"","SoundURL":""}]],"OutputLanguageMeanings":[[{"DisplayText":"shawl","Translation":" שָׁל, רְדִיד, צָעִיף","SoundURL":""}]],"PartOfSpeech":"שֵם ז'","OutputLanguageMeaningsString":"shawl","isExactMatch":"","WOTDimageURL":"","WOTDtooltip":"","TranslationIdenticalToSource":null,"Inflections":[],"SampleSentences":[],"SynonymsList":[],"UsageNotes":"","AdditionalContentList":[],"SynonymsBlocks":null,"SynonymsLinks":[]},{"ID":"17406","InputLanguageMeanings":[[{"DisplayText":"נָשַׁל","Translation":"","SoundURL":""}]],"OutputLanguageMeanings":[[{"DisplayText":"to shed","Translation":" הֵסִיר, הִשִּיל, הִשִּיר, פָּשַׁט; שָׁפַךְ, הִזִּיל; הֵפִיץ, פִּזֵּר; נָטַף","SoundURL":""},{"DisplayText":"to slough","Translation":" השקיע בבוץ; הִשִּׁיל, פָּשַׁט, הִשִּׁיר; נָטַשׁ, הִשְׁלִיךְ, נִפְטַר מ_","SoundURL":""}]],"PartOfSpeech":"פ' קל","OutputLanguageMeaningsString":"to shed, to slough","isExactMatch":"","WOTDimageURL":"","WOTDtooltip":"","TranslationIdenticalToSource":null,"Inflections":[],"SampleSentences":[],"SynonymsList":[],"UsageNotes":"","AdditionalContentList":[],"SynonymsBlocks":null,"SynonymsLinks":[]}],"WordsL2":[],"Tokens":[],"QueryRelatedCollocations":[],"QueryRelatedPhrasalVerbs":[],"QueryRelatedCollocationsObject":[],"WikipediaList":[{"ResultType":0,"Status":0,"FromTitle":"של","FromLanguage":"he","ToLanguage":"en","ToTitle":"Royal Dutch Shell","Content":"<p><b>רויאל דאטש של</b> (באנגלית: <b>Royal Dutch Shell plc</b>) היא חברת אנרגיה אנגלית-הולנדית רב לאומית, העוסקת בנפט ובגז טבעי. החברה פועלת באינטגרציה אנכית, ופעילה בכל תחומי הפעילות של תעשיית הנפט והגז - חיפוש והפקה, זיקוק, הפצה ושיווק, פטרוכימיקלים, ייצור חשמל ומסחר. החברה פעילה גם בתחומי אנרגיה מתחדשת ודלק ביולוגי. של פועלת במעל 90 מדינות, מייצרת אנרגיה בשווי 3.1 מיליון חביות נפט ביום, ומפעילה 44 אלף תחנות דלק. של היא החברה השנייה בגודלה בעולם לפי הכנסות (אחרי אקסון מוביל), ואחת משש חברות האנרגיה הציבוריות הגדולות בעולם (סופרמייג'ורס).</p>","Redirections":["Royal Dutch Shell","של"]}],"ShouldUseMachineTranslate":"false","InputTokenize":["של"],"MachineTranslateResult":null}
+
+====================
+
+http://services.morfix.com//AutoComplete/AutoComplete/GetHebrewAutoComplete/hi
+
+GET /AutoComplete/AutoComplete/GetHebrewAutoComplete/hi HTTP/1.1
+User-Agent: Dalvik/2.1.0 (Linux; U; Android 7.0; HTC 10 Build/NRD90M)
+Host: services.morfix.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+
+{"LngName":"English","LngNameL2":"Hebrew","Query":"hi","Results":["hit","hide","high","hinder","hitherto","his","hip","hilarious","hindrance","hint"],"ResultsL2":[],"Status":"Success","StatusL2":"NotFound"}
