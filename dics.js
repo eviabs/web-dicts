@@ -466,35 +466,34 @@ function urban_dictionary_process_result(search_result) {
         sounds: []
     };
 
-    switch (search_result[result_type]) {
-        // if no results are available, but there are suggestions, push them one by one to the array.
-        case "exact":
-            // iterate over the Words and copy only the needed attributes and omit the rest
-            search_result[list].forEach(function (word) {
+    if (search_result[list]) {
+        // iterate over the Words and copy only the needed attributes and omit the rest
+        search_result[list].forEach(function (word) {
 
-                // Words attributes:
-                let new_word = {};
-                ["definition",
-                    "word",
-                    "thumbs_up",
-                    "thumbs_down",
-                    "author",
-                    "example"].forEach(function (attribute) {
-                    new_word[attribute] = word[attribute];
-                });
-                new_result[list].push(new_word);
-
-                // Other attributes
-                new_result[sounds] = search_result[sounds];
-
+            // Words attributes:
+            let new_word = {};
+            ["definition",
+                "word",
+                "thumbs_up",
+                "thumbs_down",
+                "author",
+                "example"].forEach(function (attribute) {
+                new_word[attribute] = word[attribute];
             });
-            break;
+            new_result[list].push(new_word);
 
-        default:
-            new_result.error = ERROR_CODE_NO_RESULTS
+            // Other attributes
+            new_result[sounds] = search_result[sounds];
+
+        });
+
+    }
+    else {
+        new_result.error = ERROR_CODE_NO_RESULTS
     }
 
-    return new_result
+
+    return new_result;
 }
 
 /***
