@@ -8,7 +8,7 @@ The processed data can be displayed using [this android app](https://github.com/
 ## Run and Install
 Before you run the server, install all needed packages:
 ```bash
-pnm install
+npm install
 ```
  And then run:
 ```bash
