@@ -5,7 +5,12 @@ The app wraps the official/unofficial APIs of a few search providers, and create
 
 The processed data can be displayed using [this android app](https://github.com/eviabs/Dicts).
 
-## Run
+## Run and Install
+Before you run the server, install all needed packages:
+```bash
+pnm install
+```
+ And then run:
 ```bash
 node bin/www [port]
 ```
