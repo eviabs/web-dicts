@@ -466,7 +466,7 @@ function urban_dictionary_process_result(search_result) {
         sounds: []
     };
 
-    if (search_result[list]) {
+    if (search_result[list] && search_result[list].length > 0) {
         // iterate over the Words and copy only the needed attributes and omit the rest
         search_result[list].forEach(function (word) {
 
