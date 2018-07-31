@@ -78,7 +78,7 @@ module.exports = {
     morfix: function (query, res) {
         let morfix_url = "http://services.morfix.com/TranslationHebrew/TranslationService.svc/GetTranslation/";
         let morfix_headers = {"Accept": "application/json", "Host": "services.morfix.com", "Content-Type": "application/json"};
-        let morfix_body = {"Query": encodeURIComponent(query[QUERY_PARAM_TERM]),"ClientName":"Android_Hebrew"};
+        let morfix_body = {"Query": query[QUERY_PARAM_TERM],"ClientName":"Android_Hebrew"};
 
         post_request(res, morfix_url, morfix_headers, morfix_body, function (res, body) {
             res.header("Content-Type", "application/json; charset=utf-8");
