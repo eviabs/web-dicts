@@ -51,7 +51,7 @@ If you wish to add a search provider, there are several steps that must be done:
 
    `[...]` is any other data you need to display.
 
-## Authors
+## Author
 
 **Evyatar Ben-Shitrit** - [eviabs](https://github.com/eviabs)
 
