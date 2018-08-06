@@ -29,7 +29,7 @@ As for this moment, the following requests are supported:
 
 *A full documentation is available in the code itself.*
 
-### Add Seach Provider
+### Add Search Provider
 If you wish to add a search provider, there are several steps that must be done:
 1. Place your new search provider under `dic` route: `/dic/your_search_provider`.
 2. There is only one mandatory parameter: `t`. It holds the term that the user wants to search for (`/dic/your_search_provider?t=user_search_term`). Any additional  parameters are allowed.
