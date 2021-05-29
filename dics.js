@@ -368,6 +368,11 @@ function morfix_process_result(search_result) {
                 })
 
             });
+
+            if (new_result[Words].length === 0) {
+                new_result.error = ERROR_CODE_NO_RESULTS
+            }
+            
             break;
 
         default:
