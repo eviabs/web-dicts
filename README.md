@@ -1,5 +1,4 @@
-[![Analytics](https://ga-beacon.appspot.com/UA-121798497-2/github/eviabs/webdicts)](https://github.com/igrigorik/ga-beacon)
-[![Is this project still maintained?](https://img.shields.io/badge/maintained%3F-yes-green.svg?style=plastic)](https://github.com/badges/shields)
+[![Is this project still maintained?](https://img.shields.io/badge/maintained%3F-no-red.svg?style=plastic)](https://github.com/badges/shields)
 
 # web-dicts
 A Node.js app that processes http requests from famous search providers.
